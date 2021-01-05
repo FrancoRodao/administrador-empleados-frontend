@@ -1,3 +1,6 @@
+# administrador-empleados-frontend
+el primer proyecto que hice, actualmente lo estoy re-haciendo por completo para mejorar las carencias que tenia en ese momento
+
 # Frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.0.
