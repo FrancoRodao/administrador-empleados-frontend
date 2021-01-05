@@ -1,0 +1,73 @@
+<div class="lol">
+    <div class="container login-container">
+        <div class="login-form-1">
+          <h3>Sign in</h3>
+          <ng-container *ngIf="err">
+           <strong> <p class="text-center" style="color: red;margin-bottom: 0px;margin-top: 1%;">El correo ya esta siendo utilizado</p></strong>
+          </ng-container>
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Your name *"
+                  formControlName="name"
+                  required
+                  autofocus
+                  [class.is-invalid]='fieldInvalid("name") == true'
+                />
+                <small *ngIf='fieldInvalid("name") == true' class="text-danger">El nombre es obligatorio</small>
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Your lastname *"
+                  formControlName="lastname"
+                  required
+                  autofocus
+                  [class.is-invalid]='fieldInvalid("lastname") == true'
+                />
+                <small *ngIf='fieldInvalid("lastname") == true' class="text-danger">El apellido es obligatorio</small>
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Your phone *"
+                  formControlName="phone"
+                  required
+                  autofocus
+                  [class.is-invalid]='fieldInvalid("phone") == true'
+                />
+                <small *ngIf='fieldInvalid("phone") == true' class="text-danger">El celular debe tener minimo 3 digitos</small>
+              </div>
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Your Email *"
+                formControlName="email"
+                required
+                autofocus
+                [class.is-invalid]='fieldInvalid("email") == true'
+              />
+              <small *ngIf='fieldInvalid("email") == true' class="text-danger">Correo invalido</small>
+            </div>
+            <div class="form-group">
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Your Password *"
+                formControlName="password"
+                [class.is-invalid]='fieldInvalid("password") == true'
+              />
+              <small *ngIf='fieldInvalid("password") == true' class="text-danger">La contraseña es obligatoria</small>
+            </div>
+            <div class="form-group text-center">
+              <input type="submit" class="btnSubmit" value="Sign in" />
+            </div>
+          </form>
+        </div>
+      </div>
+</div>

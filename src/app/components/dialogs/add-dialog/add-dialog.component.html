@@ -1,0 +1,48 @@
+<h1 mat-dialog-title class="text-center">Add employee</h1>
+
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div *ngIf="error">
+    <p style="color: #FF0000;">Error: Revisa que el nombre o el email no esten repetidos en otro empleado </p>
+  </div>
+
+  <small *ngIf='fieldInvalid("name") == true' class="text-danger">The name is required</small>
+  <mat-form-field focus style="width: 100%;">
+    <mat-label>Employee's name</mat-label>
+    <input matInput required formControlName="name" />
+  </mat-form-field>
+
+  <small *ngIf='fieldInvalid("lastname") == true' class="text-danger">The lastname is required</small>
+  <mat-form-field focus style="width: 100%;">
+    <mat-label>Employee's lastname</mat-label>
+    <input matInput required formControlName="lastname" />
+  </mat-form-field>
+
+  
+  <mat-form-field style="width: 100%;">
+    <mat-label>Employee's phone</mat-label>
+    <input matInput formControlName="phone">    
+  </mat-form-field>
+
+  <small *ngIf='fieldInvalid("email") == true' class="text-danger">The email is required</small>
+  <mat-form-field style="width: 100%;">
+    <mat-label>Employee's email</mat-label>
+    <input matInput email required formControlName="email" />
+  </mat-form-field>
+
+  <button type="button" color="primary" mat-button (click)="file.click()"> Upload employee image</button>
+  <label>(Not required)</label>
+  <input class="d-none" type="file" #file (change)="handleFileInput($event.target.files)" accept="image/*">
+  <div class="ml-2" *ngIf="fileToUpload">
+    <label> {{fileToUpload.name}} </label>
+  </div>
+
+</form>
+
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button type="submit" (click)="onSubmit()" >
+    Add
+  </button>
+</div>

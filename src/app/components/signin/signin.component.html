@@ -1,0 +1,38 @@
+<div class="lol">
+    <div class="container login-container">
+        <div class="login-form-1">
+          <h3>Login</h3>
+          <ng-container *ngIf="err">
+           <strong> <p class="text-center" style="color: red;margin-bottom: 0px;margin-top: 1%;">Usuario invalido</p></strong>
+          </ng-container>
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Your Email *"
+                formControlName="email"
+                type="email"
+                required
+                autofocus
+                [class.is-invalid]='fieldInvalid("email") == true'
+              />
+              <small *ngIf='fieldInvalid("email") == true' class="text-danger">Correo invalido</small>
+            </div>
+            <div class="form-group">
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Your Password *"
+                formControlName="password"
+                [class.is-invalid]='fieldInvalid("password") == true'
+              />
+              <small *ngIf='fieldInvalid("password") == true' class="text-danger">La contraseña es obligatoria</small>
+            </div>
+            <div class="form-group text-center">
+              <input type="submit" class="btnSubmit" value="Login" />
+            </div>
+          </form>
+        </div>
+      </div>
+</div>
