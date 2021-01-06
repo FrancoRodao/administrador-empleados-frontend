@@ -2,11 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import { EmployeesService } from 'src/app/services/employees.service';
 import { MatDialog } from '@angular/material/dialog';
-import { AddDialogComponent } from '../dialogs/add-dialog/add-dialog.component';
+import { AddDialogComponent } from '../../components/dialogs/add-dialog/add-dialog.component';
 import { Router } from '@angular/router';
 import { Employee} from '../../interfaces/Interfaces';
-import { SureRemoveDialogComponent } from '../dialogs/sure-remove-dialog/sure-remove-dialog.component';
-import { EditDialogComponent } from '../dialogs/edit-dialog/edit-dialog.component';
+import { SureRemoveDialogComponent } from '../../components/dialogs/sure-remove-dialog/sure-remove-dialog.component';
+import { EditDialogComponent } from '../../components/dialogs/edit-dialog/edit-dialog.component';
 import * as jsPDF from 'jspdf'
 import 'jspdf-autotable';
 

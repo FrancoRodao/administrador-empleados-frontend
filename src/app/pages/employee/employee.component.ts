@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeesService } from 'src/app/services/employees.service';
 import { Employee } from '../../interfaces/Interfaces';
-import { SureRemoveDialogComponent } from '../dialogs/sure-remove-dialog/sure-remove-dialog.component';
+import { SureRemoveDialogComponent } from '../../components/dialogs/sure-remove-dialog/sure-remove-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { EditDialogComponent } from '../dialogs/edit-dialog/edit-dialog.component';
+import { EditDialogComponent } from '../../components/dialogs/edit-dialog/edit-dialog.component';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { AuthService } from 'src/app/services/auth.service';
 

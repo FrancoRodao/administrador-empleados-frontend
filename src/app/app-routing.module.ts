@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { EmployeesComponent } from './components/employees/employees.component';
-import { SigninComponent } from './components/signin/signin.component';
-import { SignupComponent } from './components/signup/signup.component';
+import { EmployeesComponent } from './pages/employees/employees.component';
+import { SigninComponent } from './pages/auth/signin/signin.component';
+import { SignupComponent } from './pages/auth/signup/signup.component';
 import { AuthGuard } from './guards/auth.guard';
-import { ProfileComponent } from './components/profile/profile.component';
-import { EmployeeComponent } from './components/employee/employee.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { EmployeeComponent } from './pages/employee/employee.component';
 
 
 const routes: Routes = [
