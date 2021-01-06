@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { User, Token, signinUser } from '../interfaces/Interfaces';
-import { catchError, map } from "rxjs/operators";
+import { catchError, map, tap } from "rxjs/operators";
 import { of } from 'rxjs/internal/observable/of';
 import { environment } from 'src/environments/environment';
 
@@ -38,9 +38,16 @@ export class AuthService {
 
 
   signOff() {
-    this.http.post(`${environment.API_URL}/logout`, {}, {withCredentials: true}).subscribe()
+    this.http.post(`${environment.API_URL}/logout`, {}, { withCredentials: true }).subscribe()
     localStorage.removeItem('token')
     this.router.navigate(['/signin'])
+  }
+
+  refreshToken() {
+    return this.http.get<any>(`${environment.API_URL}/refreshToken`, { withCredentials: true })
+      .pipe(tap((res) => {
+        this.setToken(res.token)
+      }));
   }
 
 
