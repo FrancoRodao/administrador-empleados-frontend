@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
+
   public urlhost: string = "localhost:3000"
   public url: string = "http://localhost:3000/api" //UTILIZAR VAIRABLE DE ENTORNO
 
@@ -27,6 +28,10 @@ export class AuthService {
     localStorage.setItem('token', token)
   }
 
+  checkSession() {
+    return this.getToken() ? true:false
+  }
+
   signin(usuario: signinUser) {
     return this.http.post<Token>(this.url + `/signin`, usuario, { withCredentials: true }) //AGERGAR INTERFAZ AL POST Y AL USER
   }
@@ -35,7 +40,6 @@ export class AuthService {
     return this.http.post(this.url + "/signup", usuario)
 
   }
-
 
   signOff() {
     this.http.post(`${environment.API_URL}/logout`, {}, { withCredentials: true }).subscribe()
