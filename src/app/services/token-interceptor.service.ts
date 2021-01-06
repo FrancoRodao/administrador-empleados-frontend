@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { catchError, filter, map, switchMap, take } from 'rxjs/operators';
+import { catchError, filter, switchMap, take, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable()
@@ -12,7 +12,10 @@ export class TokenInterceptorService implements HttpInterceptor {
   private isRefreshing = false;
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-  constructor(public authService: AuthService) { }
+  constructor(
+	  private authService: AuthService,
+	  private http: HttpClient
+	  ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -42,7 +45,7 @@ export class TokenInterceptorService implements HttpInterceptor {
       this.isRefreshing = true;
       this.refreshTokenSubject.next(null);
 
-      return this.authService.refreshToken().pipe(
+      return this.refreshToken().pipe(
         switchMap((res: any) => {
           this.isRefreshing = false;
           this.refreshTokenSubject.next(res.token);
@@ -58,6 +61,14 @@ export class TokenInterceptorService implements HttpInterceptor {
         }));
     }
   }
+
+  refreshToken() {
+    return this.http.get<any>(`${environment.API_URL}/refreshToken`, { withCredentials: true })
+      .pipe(tap((res) => {
+        this.authService.setToken(res.token)
+      }));
+  }
+
 }
 
 

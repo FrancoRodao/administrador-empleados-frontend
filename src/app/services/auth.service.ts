@@ -43,12 +43,4 @@ export class AuthService {
     this.router.navigate(['/signin'])
   }
 
-  refreshToken() {
-    return this.http.get<any>(`${environment.API_URL}/refreshToken`, { withCredentials: true })
-      .pipe(tap((res) => {
-        this.setToken(res.token)
-      }));
-  }
-
-
 }
