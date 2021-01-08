@@ -65,15 +65,10 @@ import { LoadingService } from './services/loading.service';
     MatDialogModule,
     FormsModule,
   ],
-  providers: [ 
+  providers: [
     {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
-    multi: true
-  },
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: LoadingService,
     multi: true
   }],
   bootstrap: [AppComponent]

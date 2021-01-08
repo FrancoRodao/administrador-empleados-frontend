@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { catchError, filter, switchMap, take, tap } from 'rxjs/operators';
+import { catchError, filter, finalize, switchMap, take, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { LoadingService } from './loading.service';
 
 
 @Injectable()
@@ -11,26 +12,44 @@ export class TokenInterceptorService implements HttpInterceptor {
 
   private isRefreshing = false;
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  activeRequests: number = 0;
 
   constructor(
-	  private authService: AuthService,
-	  private http: HttpClient
-	  ) { }
+    private authService: AuthService,
+    private http: HttpClient,
+    private loadingService: LoadingService
+  ) {}
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
+  intercept(
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+    if (this.activeRequests >= 0) {
+      this.activeRequests++;
+      this.loadingService.loading$.next(true);
+    }
     if (this.authService.getToken()) {
-      request = this.addToken(request, this.authService.getToken())
+      request = this.addToken(request, this.authService.getToken());
     }
 
-    return next.handle(request).pipe(catchError(error => {
-      if (error instanceof HttpErrorResponse && error.status === 401) {
-        return this.handle401Error(request, next);
-      } else {
-        return throwError(error);
-      }
-    }))
+    return next.handle(request).pipe(
+      finalize(() => {
+        this.activeRequests--;
+        this.loadingService.loading$.next(true);
+        if (this.activeRequests <= 0) {
+          this.loadingService.loading$.next(false);
+        }
+      }),
+      catchError((error) => {
+        if (error instanceof HttpErrorResponse && error.status === 401) {
+          return this.handle401Error(request, next);
+        } else {
+          return throwError(error);
+        }
+      })
+    );
   }
+
 
   private addToken(request: HttpRequest<any>, token: string) {
     return request.clone({
