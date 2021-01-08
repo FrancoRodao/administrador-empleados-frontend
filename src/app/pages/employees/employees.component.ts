@@ -9,6 +9,7 @@ import { SureRemoveDialogComponent } from '../../components/dialogs/sure-remove-
 import { EditDialogComponent } from '../../components/dialogs/edit-dialog/edit-dialog.component';
 import * as jsPDF from 'jspdf'
 import 'jspdf-autotable';
+import { LoadingService } from 'src/app/services/loading.service';
 
 
 
@@ -23,7 +24,6 @@ export class EmployeesComponent implements OnInit{
   displayedColumns: string[] = ['name', 'lastname', 'phone', 'email', 'actions'];
   ELEMENT_DATA: Employee[] = [];
   dataSource: Employee[] = []
-  loading: boolean = true
   error: boolean = false
   
   
@@ -31,7 +31,6 @@ export class EmployeesComponent implements OnInit{
     private employeesService: EmployeesService,
     public dialog: MatDialog,
     private router: Router,
-
   ){
 
   }
@@ -49,9 +48,6 @@ export class EmployeesComponent implements OnInit{
       (res: Employee[]) => {
         this.ELEMENT_DATA = res
         this.dataSource = this.ELEMENT_DATA;
-        setTimeout(() => {
-          this.loading = false
-        }, 500);
       },
       (error) => {
         this.error = true

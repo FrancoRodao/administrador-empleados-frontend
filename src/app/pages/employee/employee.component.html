@@ -1,59 +1,97 @@
-<ng-template #load>
-  <h1>LOADING...</h1>
-</ng-template>
-
-<ng-container *ngIf="loading == false; else load">
-  <ng-container *ngIf="error == true; else noError">
-    <h1>OCURRIO UN ERROR</h1>
-  </ng-container>
-
-  <ng-template #noError>
-    <div class="container animate__animated animate__fadeIn">
-      <div class="buttons">
-        <button (click)="back()" mat-raised-button color="warn" class="mt-2 mb-2">
-          <span class="material-icons">keyboard_backspace</span>
-          Back
+<div class="container animate__animated animate__fadeIn">
+  <div class="buttons">
+    <button (click)="back()" mat-raised-button color="warn" class="mt-2 mb-2">
+      <span class="material-icons">keyboard_backspace</span>
+      Back
+    </button>
+    <button
+      (click)="next()"
+      mat-raised-button
+      color="primary"
+      class="mt-2 mb-2 rig"
+    >
+      Next
+      <span class="material-icons">arrow_right_alt</span>
+    </button>
+  </div>
+  <h1>{{ this.userInfo.name }}</h1>
+  <div class="contenedor">
+    <div class="contenedor-imagen">
+      <img
+        [src]="userImage"
+        alt="Avatar"
+        class="image"
+        style="width: 100%; height: 100%; max-width: 500px; max-height: 500px"
+      />
+      <div class="middle">
+        <input
+          class="d-none"
+          type="file"
+          #file
+          (change)="editImage($event.target.files)"
+          accept="image/*"
+        />
+        <button
+          type="button"
+          color="primary"
+          mat-flat-button
+          (click)="file.click()"
+        >
+          Upload employee image
         </button>
-        <button (click)="next()" mat-raised-button color="primary" class="mt-2 mb-2 rig">
-          Next
-          <span class="material-icons">arrow_right_alt</span>
-        </button>
-      </div>
-      <h1>{{ this.userInfo.name }}</h1>
-      <div class="contenedor">
-        <div class="contenedor-imagen">
-          <img
-            [src]="userImage"
-            alt="Avatar"
-            class="image"
-            style="width: 100%;height: 100%;max-width: 500px;max-height: 500px;"
-          />
-          <div class="middle">
-            <input class="d-none" type="file" #file (change)="editImage($event.target.files)" accept="image/*">
-            <button type="button" color="primary" mat-flat-button (click)="file.click()"> Upload employee image</button>
-          </div>
-        </div>
-
-        <div class="contenedor-info">
-          <h3 class="mb-3">Data</h3>
-          <p>Names: {{userInfo.name}} </p>
-          <p>Surnames: {{userInfo.lastname}}</p>
-          <p>Role: userInfo.rol</p>
-          <p>Phone: {{userInfo.phone}}</p>
-          <p>Email: {{userInfo.email}}</p>
-          <p>Creation date: {{userInfo.created_At}}</p>
-          <p>Last modification: userinfo.lastmodification</p>
-          <button mat-raised-button color="warn" class="mb-2 mr-2" style="display: inline-block;">Send email</button>
-          <button mat-raised-button color="primary" class="mb-2 mr-2">Tareas asignadas</button>
-          <button mat-raised-button color="warn" class="mb-2"  style="display: inline-block;" >Send SMS</button>
-          <button mat-raised-button color="" class="button-green" >Descargar PDF con la informacion de {{userInfo.name}} </button>
-        </div>
-
-        <div class="actions">
-          <button mat-raised-button color="warn" (click)="deleteEmployee()" style="width: 50%;border-radius: 0%;">Delete usuario</button>
-          <button mat-raised-button color="primary" (click)="editEmployee()" style="width: 50%;border-radius: 0%;">Edit employee</button>
-        </div>
       </div>
     </div>
-  </ng-template>
-</ng-container>
+
+    <div class="contenedor-info">
+      <h3 class="mb-3">Data</h3>
+      <p>Names: {{ userInfo.name }}</p>
+      <p>Surnames: {{ userInfo.lastname }}</p>
+      <p>Role: userInfo.rol</p>
+      <p>Phone: {{ userInfo.phone }}</p>
+      <p>Email: {{ userInfo.email }}</p>
+      <p>Creation date: {{ userInfo.created_At }}</p>
+      <p>Last modification: userinfo.lastmodification</p>
+      <button
+        mat-raised-button
+        color="warn"
+        class="mb-2 mr-2"
+        style="display: inline-block"
+      >
+        Send email
+      </button>
+      <button mat-raised-button color="primary" class="mb-2 mr-2">
+        Tareas asignadas
+      </button>
+      <button
+        mat-raised-button
+        color="warn"
+        class="mb-2"
+        style="display: inline-block"
+      >
+        Send SMS
+      </button>
+      <button mat-raised-button color="" class="button-green">
+        Descargar PDF con la informacion de {{ userInfo.name }}
+      </button>
+    </div>
+
+    <div class="actions">
+      <button
+        mat-raised-button
+        color="warn"
+        (click)="deleteEmployee()"
+        style="width: 50%; border-radius: 0%"
+      >
+        Delete usuario
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="editEmployee()"
+        style="width: 50%; border-radius: 0%"
+      >
+        Edit employee
+      </button>
+    </div>
+  </div>
+</div>

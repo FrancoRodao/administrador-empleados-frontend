@@ -25,11 +25,14 @@ import { EditDialogComponent } from './components/dialogs/edit-dialog/edit-dialo
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { EmployeesComponent } from './pages/employees/employees.component';
-import { SigninComponent } from './pages/auth/signin/signin.component';
-import { SignupComponent } from './pages/auth/signup/signup.component';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { EmployeeComponent } from './pages/employee/employee.component';
+import { SigninComponent } from './pages/auth/signin/signin.component';
+import { SignupComponent } from './pages/auth/signup/signup.component';
+import { ErrorComponent } from './components/error/error.component';
+import { LoadingComponent } from './components/loading/loading.component';
+import { LoadingService } from './services/loading.service';
 
 
 
@@ -37,6 +40,7 @@ import { EmployeeComponent } from './pages/employee/employee.component';
 @NgModule({
   declarations: [
     AppComponent,
+    LoadingComponent,
     NavbarComponent,
     EmployeesComponent,
     SigninComponent,
@@ -45,7 +49,8 @@ import { EmployeeComponent } from './pages/employee/employee.component';
     AddDialogComponent,
     EmployeeComponent,
     SureRemoveDialogComponent,
-    EditDialogComponent
+    EditDialogComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -60,11 +65,15 @@ import { EmployeeComponent } from './pages/employee/employee.component';
     MatDialogModule,
     FormsModule,
   ],
-  entryComponents: [AddDialogComponent],
   providers: [ 
     {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
+    multi: true
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: LoadingService,
     multi: true
   }],
   bootstrap: [AppComponent]

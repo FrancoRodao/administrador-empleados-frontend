@@ -1,115 +1,111 @@
-<div *ngIf="error==true;else app">
-  <h1>OCURRIO UN ERROR</h1>
-</div>
+<div>
+  <h3 class="">EMPLEADOS APP</h3>
 
-<ng-template #load> 
-  <h1>
-    Loading...
-  </h1>
-</ng-template>
-
-<ng-template #app>
-  <div class="loading" *ngIf="loading == false && error==false; else load">
-    <h3 class="text-center mt-4">EMPLEADOS APP</h3>
-  
-    <div class="contenedor mt-3">
-      <div class="search">
-        <span class="material-icons search-icon">
-          search
-        </span>
-        <mat-form-field>
-          <mat-label>Search a employee</mat-label>
-          <input
-            matInput
-            #filter
-            (keyup)="letra(filter.value)"
-            placeholder="Jose"
-          />
-        </mat-form-field>
-      </div>
-  
-      <button (click)="addEmployee()" mat-raised-button color="primary">
-        <span class="material-icons">
-          person_add
-        </span>
-        Add
-      </button>
-  
-      <mat-table [dataSource]="dataSource" class="mat-elevation-z8 mt-1 animate__animated animate__fadeIn">
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
-        </ng-container>
-  
-        <!-- Lastanme Column -->
-        <ng-container class="lastname" matColumnDef="lastname">
-          <mat-header-cell class="lastname" *matHeaderCellDef>
-            Lastname
-          </mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            {{ element.lastname }}
-          </mat-cell>
-        </ng-container>
-  
-        <!-- Phone Column -->
-        <ng-container matColumnDef="phone">
-          <mat-header-cell *matHeaderCellDef> Phone</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{ element.phone }} </mat-cell>
-        </ng-container>
-  
-        <!-- Email Column -->
-        <ng-container matColumnDef="email">
-          <mat-header-cell class="email" *matHeaderCellDef>
-            Email
-          </mat-header-cell>
-          <mat-cell class="email" *matCellDef="let element">
-            {{ element.email }}
-          </mat-cell>
-        </ng-container>
-  
-        <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
-          <mat-cell *matCellDef="let element"> 
-
-
-            <button mat-icon-button color="primary" class="mr-2 button-green">
-              <span class="material-icons" (click)="goEmployee(element._id)">
-                account_circle
-              </span>
-            </button>
-
-            <button mat-icon-button color="primary" class="mr-2">
-              <span class="material-icons" (click)="editEmployee(element)">
-                edit
-              </span>
-            </button>
-
-            <button mat-icon-button (click)="deleteEmployee(element)" color="warn" aria-label="icon">
-              <span class="material-icons">
-                delete
-              </span>
-            </button>
-          </mat-cell>
-        </ng-container>
-  
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-      </mat-table>
-      <button mat-raised-button color="warn" class="mt-3" (click)="pdf()">descargar tabla en pdf</button>
-      <button mat-raised-button class="button-bg-green mt-3 ml-3">descargar tabla en excel</button>
+  <div class="contenedor">
+    <div class="search">
+      <span class="material-icons search-icon"> search </span>
+      <mat-form-field>
+        <mat-label>Search a employee</mat-label>
+        <input
+          matInput
+          #filter
+          (keyup)="letra(filter.value)"
+          placeholder="Jose"
+        />
+      </mat-form-field>
     </div>
+
+    <button (click)="addEmployee()" mat-raised-button color="primary">
+      <span class="material-icons"> person_add </span>
+      Add
+    </button>
+
+    <mat-table
+      [dataSource]="dataSource"
+      class="mat-elevation-z8 animate__animated animate__fadeIn"
+    >
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+      </ng-container>
+
+      <!-- Lastanme Column -->
+      <ng-container class="lastname" matColumnDef="lastname">
+        <mat-header-cell class="lastname" *matHeaderCellDef>
+          Lastname
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.lastname }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Phone Column -->
+      <ng-container matColumnDef="phone">
+        <mat-header-cell *matHeaderCellDef> Phone</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.phone }} </mat-cell>
+      </ng-container>
+
+      <!-- Email Column -->
+      <ng-container matColumnDef="email">
+        <mat-header-cell class="email" *matHeaderCellDef>
+          Email
+        </mat-header-cell>
+        <mat-cell class="email" *matCellDef="let element">
+          {{ element.email }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-icon-button color="primary" class="mr-2 button-green">
+            <span class="material-icons" (click)="goEmployee(element._id)">
+              account_circle
+            </span>
+          </button>
+
+          <button mat-icon-button color="primary" class="">
+            <span class="material-icons" (click)="editEmployee(element)">
+              edit
+            </span>
+          </button>
+
+          <button
+            mat-icon-button
+            (click)="deleteEmployee(element)"
+            color="warn"
+            aria-label="icon"
+          >
+            <span class="material-icons"> delete </span>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+    <button mat-raised-button color="warn" class="" (click)="pdf()">
+      descargar tabla en pdf
+    </button>
+    <button mat-raised-button class="button-bg-green">
+      descargar tabla en excel
+    </button>
   </div>
-</ng-template>
+</div>
 
 COSAS QUE FALTAN AGREGAR:
 
-<p>1) AL ENVIAR UN USUARIO COMPROBAR SI EXISTE EL NOMBRE O CORREO DUPLICADO
-  Y SI ESTA DUPLICADO QUE SALGA UN CARTELITO DE QUE CAMPO ES EL REPETIDO</p>
+<p>
+  1) AL ENVIAR UN USUARIO COMPROBAR SI EXISTE EL NOMBRE O CORREO DUPLICADO Y SI
+  ESTA DUPLICADO QUE SALGA UN CARTELITO DE QUE CAMPO ES EL REPETIDO
+</p>
 
 <p>4) AGREGARLE FUNCIONALIDAD AL BUSCADOR</p>
 
-<p>5) INTENTAR CREARLE INTERFAZ A TODO Y DEJAR EL CODIGO MAS LIMPIO EN GENERAL</p>
+<p>
+  5) INTENTAR CREARLE INTERFAZ A TODO Y DEJAR EL CODIGO MAS LIMPIO EN GENERAL
+</p>
 
 <p>6) AGREGALE EL PERFIL AL CONTROLADOR DE EMPLEADO</p>
 
@@ -119,10 +115,19 @@ COSAS QUE FALTAN AGREGAR:
 
 <p>9) HACER TODA LA APP RESPONSIVE</p>
 
-<p>10) MANEJO DE ERRORES SI CADUCA EL TOKEN O ALGO MOSTRAR EL EORROR EN PANTALLA</p>
+<p>
+  10) MANEJO DE ERRORES SI CADUCA EL TOKEN O ALGO MOSTRAR EL EORROR EN PANTALLA
+</p>
 
-<div style="background-color: red;">COSAS QUE FALTAN AGREGAR MAS AMBICIOSAS:</div>
+<div style="background-color: red">
+  COSAS QUE FALTAN AGREGAR MAS AMBICIOSAS:
+</div>
 
-<p>1) AGERGARLE UN PERFIL A CADA EMPLEADO Y QUE SE PUEDAN LOGEAR Y REGISTTARAR</p>
+<p>
+  1) AGERGARLE UN PERFIL A CADA EMPLEADO Y QUE SE PUEDAN LOGEAR Y REGISTTARAR
+</p>
 <p>2) CREAR ROLES ADMIN - EMPLEADO</p>
-<p>3)QUE EL ADMIN PUEDA DESIGNAR TAREAS A EMPLEADOS Y SE ACTUALIZE EN LA PANTALLA DEL EMPLEADO</p>
+<p>
+  3)QUE EL ADMIN PUEDA DESIGNAR TAREAS A EMPLEADOS Y SE ACTUALIZE EN LA PANTALLA
+  DEL EMPLEADO
+</p>

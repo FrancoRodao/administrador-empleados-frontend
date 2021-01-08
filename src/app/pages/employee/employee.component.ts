@@ -52,9 +52,7 @@ export class EmployeeComponent implements OnInit {
       (data: Employee) => {
         this.userInfo = data
         this.getImageEmployee()
-        setTimeout(() => {
-          this.loading = false
-        }, 500);
+        this.loading = false
       },
       (error => {
         this.error = true
