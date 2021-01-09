@@ -32,7 +32,7 @@ import { SigninComponent } from './pages/auth/signin/signin.component';
 import { SignupComponent } from './pages/auth/signup/signup.component';
 import { ErrorComponent } from './components/error/error.component';
 import { LoadingComponent } from './components/loading/loading.component';
-import { LoadingService } from './services/loading.service';
+// import { LoadingService } from './services/loading.service';
 
 
 
@@ -65,7 +65,7 @@ import { LoadingService } from './services/loading.service';
     MatDialogModule,
     FormsModule,
   ],
-  providers: [
+  providers: [ 
     {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
