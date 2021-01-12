@@ -65,7 +65,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   goEmployee(employeeId: string) {
-    this.router.navigate(['/employee', employeeId])
+    this.router.navigate(['/employees', employeeId])
   }
 
   deleteEmployee(employee: Employee) {
