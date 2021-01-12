@@ -19,50 +19,47 @@ export class EditDialogComponent implements OnInit {
   constructor(
     private employeeService: EmployeesService,
     public dialogRef: MatDialogRef<EditDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) 
-    {
-    }
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  }
 
   ngOnInit(): void {
 
     this.form = new FormGroup({
-      name: new FormControl("",[Validators.required]),
-      lastname: new FormControl("",[Validators.required]),
-      phone: new FormControl(""),
-      email: new FormControl("",[Validators.required,Validators.pattern("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$")]),
+      name: new FormControl(this.employee.name, [Validators.required]),
+      lastname: new FormControl(this.employee.lastname, [Validators.required]),
+      phone: new FormControl(this.employee.phone),
+      email: new FormControl(this.employee.email, [Validators.required, Validators.pattern("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$")]),
     })
-    this.form.patchValue({
-      name: this.employee.name,
-      lastname: this.employee.lastname,
-      phone: this.employee.phone,
-      email:this.employee.email
-    });
+
 
   }
 
-  onNoClick(){
-    this.dialogRef.close()
+  onNoClick() {
+    this.dialogRef.close(false)
   }
 
-  onSubmit(){
+  onSubmit() {
     this.form.markAllAsTouched()
-    if(this.form.valid){
-      Object.assign(this.employee,this.form.value)
-      this.employeeService.editEmployee(this.employee).subscribe()
-      if(this.fileToUpload != null){
-        this.employeeService.uploadImageEmployee(this.fileToUpload,this.employee._id).subscribe()
-      }
-      this.dialogRef.close()
+    if (this.form.valid) {
+      Object.assign(this.employee, this.form.value)
+      this.employeeService.editEmployee(this.employee).subscribe(() => {
+        if (this.fileToUpload != null) {
+          this.employeeService.uploadImageEmployee(this.fileToUpload, this.employee._id).subscribe(() => this.dialogRef.close(true))
+        } else {
+          this.dialogRef.close(true)
+        }
+
+      })
     }
   }
 
-  fieldInvalid(field){
-    if(this.form.get(`${field}`).touched){
+  fieldInvalid(field) {
+    if (this.form.get(`${field}`).touched) {
       return this.form.get(`${field}`).invalid && this.form.get(`${field}`).touched
 
-    }else if(this.form.get(`${field}`).valid){
+    } else if (this.form.get(`${field}`).valid) {
       return false
-    }else{
+    } else {
       return 'undefined'
     }
   }

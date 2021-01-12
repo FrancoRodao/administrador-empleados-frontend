@@ -6,6 +6,16 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+/* BUG ANGULAR MATERIAL WITH LOADING */
+/*  INTENTAR ARREGLR EL BLOCQUO DE SCROLL */
+.cdk-global-scrollblock{
+    position: static;    
+}
+/* BUG ANGULAR MATERIAL WITH LOADING*/
+
+button:focus{
+    outline: none;
+}
 
 @media only screen and (min-width: 768px){
     ::-webkit-scrollbar {

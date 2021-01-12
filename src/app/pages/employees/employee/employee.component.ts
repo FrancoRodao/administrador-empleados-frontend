@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeesService } from 'src/app/services/employees.service';
-import { Employee } from '../../interfaces/Interfaces';
-import { SureRemoveDialogComponent } from '../../components/dialogs/sure-remove-dialog/sure-remove-dialog.component';
+import { Employee } from '../../../interfaces/Interfaces';
+import { SureRemoveDialogComponent } from '../../../components/dialogs/sure-remove-dialog/sure-remove-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { EditDialogComponent } from '../../components/dialogs/edit-dialog/edit-dialog.component';
+import { EditDialogComponent } from '../../../components/dialogs/edit-dialog/edit-dialog.component';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -82,7 +82,6 @@ export class EmployeeComponent implements OnInit {
       width: "350px"
     })
     dialogRef.componentInstance.employee = this.userInfo
-    dialogRef.afterClosed().subscribe(() => this.getEmployee())
   }
 
   next() {

@@ -1,5 +1,5 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ComponentRef, ElementRef, OnDestroy, OnInit } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
@@ -13,28 +13,26 @@ export class LoadingComponent implements OnDestroy, OnInit {
 
   constructor(
     public loadingService: LoadingService,
-    private elementRef: ElementRef,
-    private changeDetectorRef: ChangeDetectorRef
+    private elementRef: ElementRef
   ) {
   }
 
   ngOnInit(): void {
-    this.elementRef.nativeElement.style.display = 'none'
+    // this.elementRef.nativeElement.style.display = 'none'
     this.loadingSubscription = this.loadingService.loading$
       .subscribe(
         (status: boolean) => {
-          console.log('status', status)
           this.elementRef.nativeElement.style.display = status ? 'block' : 'none'
-          this.changeDetectorRef.detectChanges()
-        }, (err) => {
-          console.log('err', err)
         }
       )
   }
 
   ngOnDestroy(): void {
-    console.log('unsubcribe')
     this.loadingSubscription.unsubscribe()
+  }
+
+  cancelClick(e){
+    e.stopPropagation()
   }
 
 }

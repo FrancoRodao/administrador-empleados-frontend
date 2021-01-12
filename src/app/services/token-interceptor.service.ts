@@ -18,7 +18,7 @@ export class TokenInterceptorService implements HttpInterceptor {
     private authService: AuthService,
     private http: HttpClient,
     private loadingService: LoadingService
-  ) {}
+  ) { }
 
   intercept(
     request: HttpRequest<any>,
@@ -37,27 +37,35 @@ export class TokenInterceptorService implements HttpInterceptor {
     }
 
     return next.handle(request).pipe(
+      // if error try refresh token
+      catchError((error) => {
+        if (error instanceof HttpErrorResponse && error.status === 401) {
+
+          if (request.url.includes("refreshToken")) {
+            this.loadingService.loading$.next(false)
+            this.authService.signOff();
+          }
+
+          this.loadingService.loading$.next(true);
+          return this.handle401Error(request, next)
+
+
+        } else {
+          return throwError(error);
+        }
+      }),
       // loading
       finalize(() => {
         this.activeRequests--;
-        this.loadingService.loading$.next(true);
         if (this.activeRequests <= 0) {
           this.loadingService.loading$.next(false);
-        }
-      }),
-      // refresh token
-      catchError((error) => {
-        if (error instanceof HttpErrorResponse && error.status === 401) {
-          return this.handle401Error(request, next);
-        } else {
-          return throwError(error);
         }
       })
     );
   }
 
 
-  protected addToken(request: HttpRequest<any>, token: string) {
+  addToken(request: HttpRequest<any>, token: string) {
     return request.clone({
       setHeaders: {
         'authorization': `Bearer ${token}`
@@ -65,11 +73,10 @@ export class TokenInterceptorService implements HttpInterceptor {
     });
   }
 
-  protected handle401Error(request: HttpRequest<any>, next: HttpHandler) {
+  handle401Error(request: HttpRequest<any>, next: HttpHandler) {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
       this.refreshTokenSubject.next(null);
-
       return this.refreshToken().pipe(
         switchMap((res: any) => {
           this.isRefreshing = false;
@@ -87,7 +94,7 @@ export class TokenInterceptorService implements HttpInterceptor {
     }
   }
 
-  protected refreshToken() {
+  refreshToken() {
     return this.http.get<any>(`${environment.API_URL}/refreshToken`, { withCredentials: true })
       .pipe(tap((res) => {
         this.authService.setToken(res.token)

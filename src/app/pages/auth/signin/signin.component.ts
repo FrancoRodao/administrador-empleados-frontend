@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Token, signinUser } from '../../../interfaces/Interfaces';
 
@@ -19,7 +20,8 @@ export class SigninComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private auth:  AuthService
+    private auth:  AuthService,
+    private alert: AlertService
   ) { 
 
 
@@ -30,6 +32,9 @@ export class SigninComponent implements OnInit {
       email: new FormControl("francorodao802@gmail.com",[Validators.required,Validators.pattern("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$")]),
       password: new FormControl("Francocjs12",[Validators.required,Validators.minLength(1)]),
     })
+
+    this.alert.error('0xd', 'xd')
+
 
   }
 

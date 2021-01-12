@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { LoadingService } from './services/loading.service';
+import { Component } from '@angular/core';
+
 
 @Component({
   selector: 'app-root',
@@ -8,10 +7,11 @@ import { LoadingService } from './services/loading.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'frontend';
 
-  constructor(){
-  
+  title = 'frontend2';
+
+  constructor(
+  ){
   }
 
 

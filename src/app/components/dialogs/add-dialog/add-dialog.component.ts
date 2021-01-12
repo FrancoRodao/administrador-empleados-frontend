@@ -48,7 +48,7 @@ export class AddDialogComponent implements OnInit {
   }
 
   onNoClick() {
-    this.dialogRef.close()
+    this.dialogRef.close(false)
   }
 
   onSubmit() {
@@ -60,7 +60,7 @@ export class AddDialogComponent implements OnInit {
           if (this.fileToUpload != null) {
             this.employeeService.uploadImageEmployee(this.fileToUpload, id).subscribe()
           }
-          this.dialogRef.close()
+          this.dialogRef.close(true)
         },
         (error) => {
           this.error = true
