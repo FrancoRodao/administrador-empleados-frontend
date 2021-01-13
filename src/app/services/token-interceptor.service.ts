@@ -42,11 +42,12 @@ export class TokenInterceptorService implements HttpInterceptor {
         if (error instanceof HttpErrorResponse && error.status === 401) {
 
           if (request.url.includes("refreshToken")) {
-            this.loadingService.loading$.next(false)
-            this.authService.signOff();
+            this.authService.signOff().subscribe(() => {
+              this.activeRequests = 0
+              this.loadingService.loading$.next(false)
+            })
           }
 
-          this.loadingService.loading$.next(true);
           return this.handle401Error(request, next)
 
 

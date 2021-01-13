@@ -18,7 +18,6 @@ export class LoadingComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    // this.elementRef.nativeElement.style.display = 'none'
     this.loadingSubscription = this.loadingService.loading$
       .subscribe(
         (status: boolean) => {

@@ -40,9 +40,10 @@ export class AuthService {
   }
 
   signOff() {
-    this.http.post(`${environment.API_URL}/logout`, {}, { withCredentials: true }).subscribe()
     localStorage.removeItem('token')
     this.router.navigate(['/auth/signin'])
+    return this.http.post(`${environment.API_URL}/logout`, {}, { withCredentials: true })
+
   }
 
 }
